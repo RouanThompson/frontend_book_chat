@@ -23,19 +23,25 @@ const renderBook = (book) =>{
     const bookGenre = document.createElement("p")
     const bookLikes = document.createElement("p")
     const bookCover = document.createElement("img")
+    const likesButton = document.createElement("button")
 
     bookDiv.classList.add("book-card")
+    bookCover.classList.add("book-image")
+    likesButton.classList.add("like-button")
+    
     bookDiv.id = book.id
-
     bookTitle.innerText = book.title
     bookAuthor.innerText = book.author
     bookGenre.innerText = book.genre
+    bookCover.src = book.image
+    bookLikes.innerText = book.likes
+
 
     bookDiv.append(bookTitle)
     bookDiv.append(bookAuthor)
     bookDiv.append(bookGenre)
-    bookDiv.append(bookLikes)
     bookDiv.append(bookCover)
+    bookDiv.append(bookLikes)
     bookCollection.append(bookDiv)
 
 }
