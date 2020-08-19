@@ -1,98 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Book Chat</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-	<link href="index.css" rel="stylesheet">
-	<!-- <link rel="stylesheet" href="https://m.w3newbie.com/you-tube.css"> -->
-</head>
-<body>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Book Chat</title>
+    <script defer type="text/javascript" src="src/index.js"></script>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div id="book-header">
+      <!-- <img
+        src="https://fontmeme.com/permalink/180719/67429e6afec53d21d64643101c43f029.png"
+        alt="toy-header"
+      /> -->
+    </div>
 
-<!-- Navigation -->
-<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
-	<div class="container-fluid">
-		<a class="navbar-brand" href="#"><img src="img/logo.png"></a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-		data-target="#navbarResponsive">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarResponsive">
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item">
-					<p>Search Books</p>
-				</li>
-				<li class="nav-item">
-					<p>About</p>
-				</li>
-				<li class="nav-item">
-					<p>Services</p>
-				</li>
-				<li class="nav-item">
-					<p>Home</p>
-				</li>
-				<li class="nav-item">
-					<p>Home</p>
-				</li>
-			</ul>
-	</div>
-</nav>
+    <div class="container">
+      <form class="add-book-form">
+        <h3>Create a Book!</h3>
 
-<!--- Image Slider -->
+        <input
+          type="text"
+          name="name"
+          value=""
+          placeholder="Enter a Book's name..."
+          class="input-text"
+        />
+        <br />
+        <input
+          type="text"
+          name="image"
+          value=""
+          placeholder="Enter a Book's image URL..."
+          class="input-text"
+        />
+        <br />
+        <input
+          type="submit"
+          name="submit"
+          value="Create New Book"
+          class="submit"
+        />
+      </form>
+    </div>
+    <p style="text-align:center">
+      <button id="new-toy-btn">Add a new Book!</button>
+    </p>
 
-
-<!--- Jumbotron -->
-
-
-<!--- Welcome Section -->
-
-
-<!--- Three Column Section -->
-
-
-<!--- Two Column Section -->
-
-
-<!--- Fixed background -->
-
-
-<!--- Emoji Section -->
-
-  
-<!--- Meet the team -->
-
-
-<!--- Cards -->
-
-
-<!--- Two Column Section -->
-
-
-<!--- Connect -->
-
-
-<!--- Footer -->
-
-
-
-
-</body>
+    <div id="book-collection"></div>
+  </body>
 </html>
 
-
-
-
-<!-- View in Browser: Drew's #1 Trending YouTube Tutorial -->
-<!-- <div class="youtube-tutorial">
-	<a href="http://w3n.link/bundle-bonus-playlist" target="_blank" style="cursor: pointer!important;">
-    <img src="https://w3newbie.com/wp-content/uploads/12-site-bundle-banner.png" style="max-width: 100%; position: absolute; bottom: 0;">
-  </a>
-</div> -->
-<!-- End View in Browser: Drew's #1 Trending YouTube Tutorial -->
 
 

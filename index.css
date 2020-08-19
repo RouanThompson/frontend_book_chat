@@ -1,94 +1,99 @@
-@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
-
-
-
-
-
-
-
-
-
-
-
-/*---Media Queries --*/
-@media (max-width: 992px) {
-
-  }
-@media (max-width: 768px) {
-  
-}
-@media (max-width: 576px) {
-  
+body {
+  margin: 0;
+  font-family: monospace;
 }
 
-
-/*---Firefox Bug Fix --*/
-.carousel-item {
-  transition: -webkit-transform 0.5s ease;
-  transition: transform 0.5s ease;
-  transition: transform 0.5s ease, -webkit-transform 0.5s ease;
-  -webkit-backface-visibility: visible;
-  backface-visibility: visible;
+#book-header {
+  display: flex;
+  justify-content: center;
+  background: #515DA2;
+  opacity: .8;
+  height: 7rem;
+  padding: 1rem;
 }
-/*--- Fixed Background Image --*/
-figure {
+
+#book-header img {
+  height: 6rem;
+  width: auto;
+}
+
+#book-collection {
+  margin: 2rem;
+}
+
+.card {
+  text-align: center;
+  border: grey solid 1px;
+  padding: 1rem;
+  width: 15rem;
+  height: 25rem;
+  display: inline-grid;
+  margin: 1rem 2rem;
+  box-shadow: 3px 4px #e04b52
+}
+
+.book-avatar {
+  justify-self: center;
+  height: 12rem;
+  width: auto;
+}
+
+button {
   position: relative;
-  width: 100%;
-  height: 60%;
-  margin: 0!important;
-}
-.fixed-wrap {
-  clip: rect(0, auto, auto, 0);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-#fixed {
-  background-image: url('img/mac.png');
-  position: fixed;
-  display: block;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center center;
-  -webkit-transform: translateZ(0);
-          transform: translateZ(0);
-  will-change: transform;
-}
-/*--- Bootstrap Padding Fix --*/
-[class*="col-"] {
-    padding: 1rem;
+  background-color: #e04b52;
+  border: none;
+  border-radius: 5px;
+  height: 3rem;
+  width: max-content;
+  color: whitesmoke;
+  font-size: 18px;
+  justify-self: center;
 }
 
+button:hover {
+  background-color: whitesmoke;
+  border: #e04b52 solid 1px;
+  color: #e04b52;
+}
+
+.container {
+  padding: 1rem;
+  width: stretch;
+  height: auto;
+  display: none;
+  background: #515DA2;
+  opacity: .8;
+}
+
+.add-book-form {
+  width: 80%
+}
+
+.submit {
+  position: relative;
+  background-color: #e04b52;
+  border-radius: 5px;
+  height: 2rem;
+  width: max-content;
+  color: whitesmoke;
+  font-size: 18px;
+  justify-self: center;
+  font-family: monospace;
+  margin: 3px;
+}
+
+.submit:hover {
+  background-color: whitesmoke;
+  border: #e04b52 solid 1px;
+  color: #e04b52;
+}
 
 
-
-
-/*
-Extra small (xs) devices (portrait phones, less than 576px)
-No media query since this is the default in Bootstrap
-
-Small (sm) devices (landscape phones, 576px and up)
-@media (min-width: 576px) { ... }
-
-Medium (md) devices (tablets, 768px and up)
-@media (min-width: 768px) { ... }
-
-Large (lg) devices (desktops, 992px and up)
-@media (min-width: 992px) { ... }
-
-Extra (xl) large devices (large desktops, 1200px and up)
-@media (min-width: 1200px) { ... }
-*/
-
-
-
-
-
-
-
-
+.input-text {
+  border-radius: 5px;
+  height: 2rem;
+  width: 60%;
+  font-size: 18px;
+  font-family: monospace;
+  margin: 3px;
+}
