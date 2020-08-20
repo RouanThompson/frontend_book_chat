@@ -2,12 +2,17 @@ const booksUrl = "http://localhost:3000/books"
 const sideBarDiv = document.querySelector("#sidebar")
 const bookCollection = document.querySelector("#book-collection")
 const bookRow = document.querySelector(".row")
+const buttonLeader = document.querySelector("#bttn-leader")
 
 //treating it as my main
 document.addEventListener('DOMContentLoaded', () => {
     loginForm()
+
 })
 //
+
+
+
 
 
 let loginForm = () => {
@@ -51,7 +56,6 @@ let loginForm = () => {
     //event login when submit
     loginForm.addEventListener("submit", login)
     //
-
 }   
 
 let login = (form) => {
@@ -92,8 +96,8 @@ let login = (form) => {
 let renderUser = (user) => {
     //function calls, passing in user object
     setSideBar(user)
-    // setClassrooms(user)
-    fetchData()
+    setFilterbutton()
+    fetchBooks()
 }
 
 // ------------ SET SIDE BAR AFTER LOGIN ------------
@@ -120,16 +124,95 @@ let setSideBar = (user) => {
     //
 
     //when logout is clicked
-    logOutButton.addEventListener("click", (loggingOut) => {
+    logOutButton.addEventListener("click", () => {
         logOut()
     })
 }
 
 let logOut = () => {
     clear(bookCollection)
+    clear(buttonLeader)
     loginForm()
 }
 
+const setFilterbutton = () => {
+    let allLabel = document.createElement("label")
+    let adventureLabel = document.createElement("label")
+    let fantasyLabel = document.createElement("label")
+    let romanceLabel = document.createElement("label")
+    let mysteryLabel = document.createElement("label")
+    let sciFiLabel = document.createElement("label")
+    let horrorLabel = document.createElement("label")
+
+    let allInput = document.createElement("input")
+    let adventureInput = document.createElement("input")
+    let fantasyInput = document.createElement("input")
+    let romanceInput = document.createElement("input")
+    let mysteryInput = document.createElement("input")
+    let sciFiInput = document.createElement("input")
+    let horrorInput = document.createElement("input")
+
+    allLabel.classList.add("btn","btn-secondary","active")
+    adventureLabel.classList.add("btn","btn-secondary")
+    fantasyLabel.classList.add("btn", "btn-secondary")
+    romanceLabel.classList.add("btn" ,"btn-secondary")
+    mysteryLabel.classList.add("btn", "btn-secondary")
+    sciFiLabel.classList.add("btn","btn-secondary")
+    horrorLabel.classList.add("btn","btn-secondary")
+
+    allInput.type = "radio"
+    adventureInput.type = "radio"
+    fantasyInput.type = "radio"
+    romanceInput.type = "radio"
+    mysteryInput.type = "radio"
+    sciFiInput.type = "radio"
+    horrorInput.type = "radio"
+
+    allInput.name = "options"
+    adventureInput.name = "options"
+    fantasyInput.name = "options"
+    romanceInput.name = "options"
+    mysteryInput.name = "options"
+    sciFiInput.name = "options"
+    horrorInput.name = "options"
+
+    allInput.id = "option1"
+    adventureInput.id = "option2"
+    fantasyInput.id = "option3"
+    romanceInput.id = "option4"
+    mysteryInput.id = "option5"
+    sciFiInput.id = "option6"
+    horrorInput.id = "option7"
+
+    allInput.autocomplete = "off"
+    adventureInput.autocomplete = "off"
+    fantasyInput.autocomplete = "off"
+    romanceInput.autocomplete = "off"
+    mysteryInput.autocomplete = "off"
+    sciFiInput.autocomplete = "off"
+    horrorInput.autocomplete = "off"
+
+    allInput.checked = true
+
+    allLabel.innerText = "All"
+    adventureLabel.innerText = "Adventure"
+    fantasyLabel.innerText = "Fantasy"
+    romanceLabel.innerText = "Romance"
+    mysteryLabel.innerText = "Mystery"
+    sciFiLabel.innerText = "Sci-Fi"
+    horrorLabel.innerText = "Horror"
+
+    allLabel.append(allInput)
+    adventureLabel.append(adventureInput)
+    fantasyLabel.append(fantasyInput)
+    romanceLabel.append(romanceInput)
+    mysteryLabel.append(mysteryInput)
+    sciFiLabel.append(sciFiInput)
+    horrorLabel.append(horrorInput)
+
+    buttonLeader.append(allLabel, adventureLabel, fantasyLabel, romanceLabel, mysteryLabel, sciFiLabel, horrorLabel)
+
+}
 
 // ------------ SET MAIN CONTAINER AFTER LOGIN ------------
 
@@ -137,7 +220,7 @@ let logOut = () => {
 //************************************/
 // slapping on the DOM
 
-const fetchData = () => {
+const fetchBooks = () => {
     fetch(booksUrl)
     .then(res => res.json())
     .then(bookArr => {
@@ -157,6 +240,7 @@ const renderBook = (book) =>{
     const bookLikes = document.createElement("p")
     const bookCover = document.createElement("img")
     const likesButton = document.createElement("button")
+    const viewButton = document.createElement("button")
 
     bookCol.classList.add("col-sm-6")
     bookDiv.classList.add("card")
@@ -164,7 +248,8 @@ const renderBook = (book) =>{
     bookTitle.classList.add("card-title")
     bookCover.classList.add("card-img-top")
     likesButton.classList.add("like-button")
-    
+    viewButton.classList.add("btn", "btn-info")
+
     bookDiv.style = "width: 18rem;"
     bookCover.alt = "Card image cap"
 
@@ -172,22 +257,45 @@ const renderBook = (book) =>{
     bookTitle.innerText = book.title
     bookAuthor.innerText = book.author
     bookGenre.innerText = book.genre
-    // bookCover.src = book.image
     bookLikes.innerText = book.likes
+    viewButton.innerText = "View Comments"
 
     bookBody.append(bookTitle)
     bookBody.append(bookAuthor)
     bookBody.append(bookGenre)
     bookBody.append(bookLikes)
+    bookBody.append(likesButton)
+    bookBody.append(viewButton)
     bookDiv.append(bookCover)
     bookDiv.append(bookBody)
+
+    viewButton.addEventListener("click", () => {
+        clearExcept(bookCollection.id, book.id)
+        bookBody.removeChild(viewButton)
+    })
+
     bookCol.append(bookDiv)
     bookRow.append(bookCol)
 
 }
 
+
+
+// -----------------HELPERS--------------------
+
+const clearExcept = (parentId, exceptId) => {
+    let matched = document.getElementById(exceptId)
+    parent = document.getElementById(parentId)
+
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+    parent.appendChild(matched)
+}
+
 const clear = (parent) => {
     let child = parent.lastElementChild
+
     while (child) { 
         parent.removeChild(child) 
         child = parent.lastElementChild
