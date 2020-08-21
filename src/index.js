@@ -1,18 +1,22 @@
 const booksUrl = "http://localhost:3000/books"
+const commentsUrl = "http://localhost:3000/comments"
+const usersUrl = "http://localhost:3000/users"
 const sideBarDiv = document.querySelector("#sidebar")
 const bookCollection = document.querySelector("#book-collection")
 const bookRow = document.querySelector(".row")
 const buttonLeader = document.querySelector("#bttn-leader")
+const modal = document.querySelector("#modal")
+const add = document.querySelector("#add")
+const saveChanges = document.querySelector("#save-changes")
+const saveDelete = document.querySelector("#delete")
+
+
 
 //treating it as my main
 document.addEventListener('DOMContentLoaded', () => {
     loginForm()
-
 })
 //
-
-
-
 
 
 let loginForm = () => {
@@ -102,6 +106,9 @@ let renderUser = (user) => {
 
 // ------------ SET SIDE BAR AFTER LOGIN ------------
 
+//************************************/
+// slapping on the DOM
+
 let setSideBar = (user) => {
 
     clear(sideBarDiv)
@@ -113,7 +120,8 @@ let setSideBar = (user) => {
 
     //assigning values to elements attributes
     username.className = "font-weight-bold text-center" 
-    username.innerText = `Logged in as ${user.name}`
+    username.innerText = `Logged in as ${user.username}`
+    username.id = user.id
     
     logOutButton.className = "btn btn-danger"
     logOutButton.innerText = "Logout"
@@ -241,6 +249,7 @@ const renderBook = (book) =>{
     const bookCover = document.createElement("img")
     const likesButton = document.createElement("button")
     const viewButton = document.createElement("button")
+    const commentButton = document.createElement("button")
 
     bookCol.classList.add("col-sm-6")
     bookDiv.classList.add("card")
@@ -249,6 +258,8 @@ const renderBook = (book) =>{
     bookCover.classList.add("card-img-top")
     likesButton.classList.add("like-button")
     viewButton.classList.add("btn", "btn-info")
+    commentButton.classList.add("btn", "btn-info")
+
 
     bookDiv.style = "width: 18rem;"
     bookCover.alt = "Card image cap"
@@ -259,6 +270,8 @@ const renderBook = (book) =>{
     bookGenre.innerText = book.genre
     bookLikes.innerText = book.likes
     viewButton.innerText = "View Comments"
+    commentButton.innerText = "Hey add Comment"
+
 
     bookBody.append(bookTitle)
     bookBody.append(bookAuthor)
@@ -268,20 +281,131 @@ const renderBook = (book) =>{
     bookBody.append(viewButton)
     bookDiv.append(bookCover)
     bookDiv.append(bookBody)
+    bookCol.append(bookDiv)
+    bookRow.append(bookCol)
 
     viewButton.addEventListener("click", () => {
         clearExcept(bookCollection.id, book.id)
         bookBody.removeChild(viewButton)
+        bookBody.append(modal)
+        modal.hidden = false
+
+        //add
+      
+      fetchComments()
     })
 
-    bookCol.append(bookDiv)
-    bookRow.append(bookCol)
 
+    const fetchComments = () =>{
+    
+        let divCol = document.createElement("div")
+        let liActive = document.createElement("li")
+        // let divRow = document.createElement("div")
+        // let ulGroup = document.createElement("ul")
+        
+        
+        
+        bookCollection.classList.add("row")
+        divCol.classList.add("col-sm-6")
+        liActive.classList.add("list-group-item","active")
+        // divRow.classList.add("row")
+        // ulGroup.classList.add("list-group")
+        // liActive.hidden = "true"
+
+        liActive.innerText = "Comments"
+    
+        fetch(booksUrl + '/' + bookDiv.id)
+        .then(res => res.json())
+        .then(book => {
+
+            book["comments"].forEach(comment => {
+
+                let liItem = document.createElement("li")
+                // let commentDel = document.createElement("button")
+                // let i = document.createElement("i")
+                
+                // commentDel.type = "button"
+                // commentDel.className = "btn"
+                // i.className = ("fa fa-building-o")
+                // i.innerText = "Default"
+
+                liItem.className = "list-group-item"
+                
+                fetch(usersUrl + '/' + comment.user_id)
+                .then(res => res.json())
+                .then(user => {
+                    liItem.innerText = user.username + ': ' + comment.comment
+                    liItem.id = user.username
+
+                    // liItem.addEventListener("click", () => {
+                    //     console.log("click")
+                    //     liActive.removeChild(liItem)
+                    // })
+                    // commentDel.name = user.username
+                })
+                
+                liActive.append(liItem)
+                // commentDel.append(i)
+                // liItem.append(commentDel)
+
+            })
+
+        })
+            
+        divCol.append(liActive)
+        bookCollection.append(divCol)
+        // divRow.append(divCol)
+
+        add.addEventListener("click", (event) => {
+            event.preventDefault()
+
+            let userId = document.querySelector(".font-weight-bold")
+            let bookId = document.querySelector(".card")
+            let userComment = document.querySelector("#textarea")
+        
+            let user_id = userId.id
+            let book_id = bookId.id
+            let comment = userComment.value
+        
+            console.log("before fetch")
+            fetch("http://localhost:3000/comments", {
+            method: 'POST',
+            body: JSON.stringify({
+                user_id: user_id,
+                book_id: book_id,
+                comment: comment,
+                likes: 0,
+            }),
+            headers:{
+                'Content-Type': 'application/json',
+                "Accept": "application/json"
+            }
+            })
+            .then(res => res.json())
+            .then(response => {
+                let userName = document.querySelector(".font-weight-bold")
+                let liItem = document.createElement("li")
+                liItem.className = "list-group-item"
+
+                let last = (words) =>{
+
+                    let n = words.replace(/[\[\]?.,\/#!$%\^&\*;:{}=\\|_~()]/g, "").split(" ")
+                    return n[n.length - 1]
+                }
+
+                let string = userName.innerText
+
+                user = last(string)
+                liItem.innerText = user + ': ' + response.comment
+                liItem.id = userName.id
+                liActive.append(liItem)
+            })
+      })
+    }
 }
 
 
-
-// -----------------HELPERS--------------------
+//-----------------HELPERS--------------------
 
 const clearExcept = (parentId, exceptId) => {
     let matched = document.getElementById(exceptId)
@@ -303,3 +427,6 @@ const clear = (parent) => {
     //removeChild() removes the SPECIFIED child from the parent element
     //returns the removed child...thus can use appendChild to place it elsewhere
 }
+
+
+

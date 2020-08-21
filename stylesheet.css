@@ -16,4 +16,6 @@
     margin: 1rem 2rem;
     box-shadow: 3px 4px #4be0c0
   }
-  
+  .list-group-item{
+    color: black;
+  }
